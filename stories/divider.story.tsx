@@ -13,48 +13,29 @@
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Button } from './Button';
+import { Button } from '@components/button/Button';
+
+import Divider from '@components/divider';
 
 const meta = {
-  title: 'Example/Button',
-  component: Button,
+  title: 'Example/Divider',
+  component: Divider,
   parameters: {
     layout: 'centered'
   },
-  tags: ['autodocs'],
-  argTypes: {
-    backgroundColor: { control: 'color' }
-  },
-
-  args: { onClick: fn() }
-} satisfies Meta<typeof Button>;
+  tags: ['autodocs']
+  // argTypes: {
+  //   backgroundColor: { control: 'color' }
+  // },
+  // args: { onClick: fn() }
+} satisfies Meta<typeof Divider>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    primary: true,
-    label: 'Button'
-  }
-};
-
-export const Secondary: Story = {
-  args: {
-    label: 'Button'
-  }
-};
-
-export const Large: Story = {
-  args: {
-    size: 'large',
-    label: 'Button'
-  }
-};
-
-export const Small: Story = {
-  args: {
-    size: 'small',
-    label: 'Button'
+    // primary: true,
+    // label: 'Button'
   }
 };
