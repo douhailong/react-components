@@ -1,18 +1,18 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import type { DividerProps } from './types';
+import './style/index.less';
 
-// import './style/index.less';
+import type { DividerProps } from './types';
 
 const InternalDivider: React.ForwardRefRenderFunction<
   HTMLDivElement,
   DividerProps
 > = (
   {
-    children = 1111111111111111,
+    children,
     className,
-    direction = 'horizontal',
+    direction = 'vertical',
     position = 'center',
     ...resrProps
   },
@@ -25,14 +25,20 @@ const InternalDivider: React.ForwardRefRenderFunction<
     `${prefix}-${direction}`,
     {
       [`${prefix}-with-text`]: children,
-      [`${prefix}-with-text-${position}`]: children
+      [`${prefix}-with-text-${position}`]: children && position
     },
     className
   );
 
   return (
-    <div role='divider' ref={ref} className={classNames} {...resrProps}>
-      {children && direction === 'horizontal' ? <span>{children}</span> : null}
+    <div>
+      <span>aaa</span>
+      <div role='divider' ref={ref} className={classNames} {...resrProps}>
+        {children && direction === 'horizontal' ? (
+          <span>{children}</span>
+        ) : null}
+      </div>
+      <span>aaa</span>
     </div>
   );
 };

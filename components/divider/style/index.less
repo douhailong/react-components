@@ -1,6 +1,22 @@
-&-horizontal {
-  position: relative;
-  width: 100%;
-  min-width: 100%;
-  max-width: 100%;
+@prefix: 'rc';
+
+@divider-prefix: ~'@{prefix}-divider';
+
+.@{divider-prefix} {
+  &-horizontal {
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border-bottom: 1px solid red;
+    clear: both;
+  }
+
+  &-vertical {
+    display: inline-block;
+    width: 1px;
+    height: 1em;
+    border-left: 1px solid red;
+    vertical-align: middle;
+  }
 }

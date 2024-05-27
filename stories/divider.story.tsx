@@ -21,7 +21,7 @@ const meta = {
   title: 'Example/Divider',
   component: Divider,
   parameters: {
-    layout: 'centered'
+    // layout: 'centered'
   },
   tags: ['autodocs']
   // argTypes: {
