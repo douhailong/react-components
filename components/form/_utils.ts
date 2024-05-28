@@ -1,11 +1,9 @@
 import { cloneDeepWith } from 'lodash-es';
+import { isObject, isArray } from '../_utils/is';
 
-const isObject = () => true;
-const isArray = () => true;
-
-const cloneDeep = <T>(value: T) =>
+export const cloneDeep = (value: unknown) =>
   cloneDeepWith(value, (val) => {
-    if (!isObject() && !isArray()) {
+    if (!isObject(val) && !isArray(val)) {
       return val;
     }
   });
