@@ -2,6 +2,12 @@ import { get, set } from 'lodash-es';
 import { isArray } from '../_utils/is';
 import { cloneDeep } from './_utils';
 
+type DeepPartial<T> = T extends object
+  ? {
+      [K in keyof T]?: DeepPartial<T[K]>;
+    }
+  : T;
+
 class FormStore<
   FormData = any,
   FieldValue = FormData[keyof FormData],
@@ -29,8 +35,13 @@ class FormStore<
   public getFieldError = () => {};
   public getFieldsError = () => {};
   public getTouchedFields = () => {};
-  public getFields = () => {};
-  public setFieldValue = () => {};
+  public getFields = (): Partial<FormData> => cloneDeep(this.store);
+
+  public setFieldValue = (field: FieldKey, value: FieldValue) => {
+    if (field === undefined || field === null) return;
+    this.setFields();
+  };
+
   public setFieldsValue = () => {};
   public setFields = () => {};
 
