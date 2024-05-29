@@ -16,6 +16,20 @@ class FormStore<
   private store: Partial<FormData> = {};
   private initialValues: Partial<FormData> = {};
 
+  private formListeners: (() => void)[] = [];
+  private fieldListeners: (() => void)[] = [];
+
+  private dispatchFormAction = () => {
+    for (const listener of this.formListeners) {
+      listener();
+    }
+  };
+  private dispatchFieldAction = () => {
+    for (const listener of this.fieldListeners) {
+      listener();
+    }
+  };
+
   public getFieldsValue = (fields: FieldKey[]) => {
     const values = {};
 

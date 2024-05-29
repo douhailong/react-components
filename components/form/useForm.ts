@@ -43,7 +43,6 @@ const useForm = <
       formRef.current = getFormInstance();
     }
   }
-
   return [formRef.current];
 };
 
