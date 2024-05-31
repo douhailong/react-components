@@ -5,8 +5,9 @@ import Button from '@components/button';
 export const Status = () => {
   return (
     <div>
-      <Button>Primary Button</Button>
-      <Button>Default Button</Button>
+      <Button>
+        <span>Default Button</span>
+      </Button>
       <Button>Danger Button</Button>
       <Button>Disabled Button</Button>
       <Button>Default Button</Button>
@@ -21,20 +22,3 @@ export const Demo1 = () => {
 export default {
   title: 'Buttons'
 };
-
-// const meta = {
-//   title: 'Example/Button',
-//   component: Demo,
-//   parameters: {},
-//   tags: ['autodocs']
-// } satisfies Meta<typeof Demo>;
-
-// export default meta;
-// type Story = StoryObj<typeof meta>;
-
-// export const Primary: Story = {
-//   // args: {
-//   //   // children: <>jjkkkkkkkk</>
-//   //   // label: 'Button'
-//   // }
-// };

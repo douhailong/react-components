@@ -20,7 +20,16 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
+    children: '999'
     // primary: true,
     // label: 'Button'
   }
+};
+
+export const Status = () => {
+  return (
+    <div>
+      <Divider>Primary Button</Divider>
+    </div>
+  );
 };

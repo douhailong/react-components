@@ -1,19 +1,33 @@
+@import './default.less';
+// @import '../../_style/defined.less';
+// @import '../../_style/colors.less';
+
 .btn() {
   position: relative;
   display: inline-block;
+  font-weight: @btn-font-weight;
+  white-space: nowrap;
   outline: none;
+  box-shadow: @btn-shadow;
+  border: @btn-border-width @btn-border-style transparent;
   text-align: center;
   cursor: pointer;
-  white-space: nowrap;
   user-select: none;
   touch-action: manipulation;
   box-sizing: border-box;
-  &:hover {
-  }
+  .button-size(@btn-height-md; @btn-py-md; @btn-px-md; @rounded-md; @btn-text-md);
 }
 
 .btn-default() {
+  background: @btn-default-bg;
 }
 
-.btn-primary() {
+// .btn-primary() {
+// }
+
+.button-size(@h; @p-y; @p-x; @rounded; @text) {
+  height: @h;
+  padding: @p-y @p-x;
+  font-size: @text;
+  border-radius: @rounded;
 }

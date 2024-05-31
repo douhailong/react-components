@@ -107,6 +107,6 @@ const InternalButton: ForwardRefRenderFunction<ButtonRef, ButtonProps> = (
   );
 };
 
-const Button = forwardRef<ButtonRef>(InternalButton);
+const Button = forwardRef<ButtonRef, ButtonProps>(InternalButton);
 
 export default Button;
