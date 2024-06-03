@@ -8,3 +8,4 @@ export const isFunction = (tar: unknown) => typeof tar === 'function';
 export const isArray = (tar: unknown) => Array.isArray(tar);
 export const isObject = (tar: unknown) =>
   strProto.call(tar) === '[object Object]';
+export const isExist = (tar: any): boolean => tar || tar === 0;

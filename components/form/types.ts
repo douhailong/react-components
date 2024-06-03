@@ -1,7 +1,7 @@
 import { FormHTMLAttributes, ReactNode } from 'react';
 import FormStore from './store';
 
-type FormStoreAttribute =
+type FormStoreAttributes =
   | 'getFieldsValue'
   | 'getFieldValue'
   | 'getFieldError'
@@ -21,7 +21,7 @@ export type FormInstance<
   FormData = any,
   FieldValue = FormData[keyof FormData],
   FieldKey extends keyof any = keyof FormData
-> = Pick<FormStore<FormData, FieldValue, FieldKey>, FormStoreAttribute> & {};
+> = Pick<FormStore<FormData, FieldValue, FieldKey>, FormStoreAttributes> & {};
 
 export type FormProps<
   FormData = any,
@@ -75,11 +75,15 @@ export type FormProps<
   onSubmitFailed?: () => void;
 };
 
+export type FormContextProps<
+  FormData = any,
+  FieldValue = FormData[keyof FormData],
+  FieldKey extends keyof any = keyof FormData
+> = Pick<FormProps<FormData, FieldValue, FieldKey>, ''>;
+
 export enum SubmitStatus {
   init = 'init',
   error = 'error',
   success = 'success',
   submitting = 'submitting'
 }
-
-type a = FormProps['className'];

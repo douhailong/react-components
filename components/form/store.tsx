@@ -1,5 +1,5 @@
 import { get, set } from 'lodash-es';
-import { isArray } from '../_utils/is';
+import { isArray, isExist } from '../_utils/is';
 import { cloneDeep } from './_utils';
 
 type DeepPartial<T> = T extends object
@@ -8,12 +8,15 @@ type DeepPartial<T> = T extends object
     }
   : T;
 
+type DispatchType = 'setFieldValue' | 'reset' | 'innerSetValue';
+
 class FormStore<
   FormData = any,
   FieldValue = FormData[keyof FormData],
   FieldKey extends keyof any = keyof FormData
 > {
   private store: Partial<FormData> = {};
+
   private initialValues: Partial<FormData> = {};
 
   private formListeners: (() => void)[] = [];
@@ -30,7 +33,9 @@ class FormStore<
     }
   };
 
-  public getFieldsValue = (fields: FieldKey[]) => {
+  public getFields = (): Partial<FormData> => cloneDeep(this.store);
+
+  public getFieldsValue = (fields: FieldKey[]): Partial<FormData> => {
     const values = {};
 
     if (isArray(fields)) {
@@ -39,7 +44,9 @@ class FormStore<
       }
       return values;
     }
-    // ?????------
+
+    // TODO 获取所有注册的字段值返回
+    return values;
   };
 
   public getFieldValue = (field: FieldKey): FieldValue => {
@@ -49,7 +56,6 @@ class FormStore<
   public getFieldError = () => {};
   public getFieldsError = () => {};
   public getTouchedFields = () => {};
-  public getFields = (): Partial<FormData> => cloneDeep(this.store);
 
   public setFieldValue = (field: FieldKey, value: FieldValue) => {
     if (field === undefined || field === null) return;
@@ -59,7 +65,15 @@ class FormStore<
   public setFieldsValue = () => {};
   public setFields = () => {};
 
-  public resetFields = () => {};
+  public resetFields = (fields: FieldKey | FieldKey[]) => {
+    const keys = isExist(fields) && !isArray(fields) ? [fields] : fields;
+
+    if (isArray(keys)) {
+      for (const key in keys) {
+        set(this.store, key, this.initialValues[key as keyof FormData]);
+      }
+    }
+  };
 
   public clearFields = () => {};
   public submit = () => {};
