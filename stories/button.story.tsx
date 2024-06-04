@@ -6,11 +6,14 @@ export const Status = () => {
   return (
     <div>
       <div style={{ margin: '8px 0' }}>type</div>
-      <div style={{ display: 'flex', gap: 6 }}>
-        <Button type='primary'>Primary Button</Button>
+      <div style={{ display: 'flex', gap: 6, padding: 8 }}>
+        <Button type='primary' ghost>
+          Primary Button
+        </Button>
         <Button>Default Button</Button>
-        <Button type='text'>Text Button</Button>
+        <Button type='dashed'>Text Button</Button>
         <Button type='link'>Link Button</Button>
+        <Button type='text'>Text Button</Button>
       </div>
 
       <div style={{ margin: '8px 0' }}>size</div>

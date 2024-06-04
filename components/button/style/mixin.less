@@ -14,7 +14,7 @@
   touch-action: manipulation;
   box-sizing: border-box;
   transition: all 0.3s;
-  .button-size(@btn-height-md; @btn-py-md; @btn-px-md; @rounded-md; @btn-text-md);
+  .button-size(@btn-height-md; @btn-py-md; @btn-px-md; @btn-rounded; @btn-text-md);
 
   &[disabled] {
     cursor: not-allowed;
@@ -24,20 +24,20 @@
   }
 
   &-lg {
-    .button-size(@btn-height-lg; @btn-py-lg; @btn-px-lg; @rounded-lg; @btn-text-lg);
+    .button-size(@btn-height-lg; @btn-py-lg; @btn-px-lg; @btn-rounded; @btn-text-lg);
   }
 
   &-sm {
-    .button-size(@btn-height-sm; @btn-py-sm; @btn-px-sm; @rounded-sm; @btn-text-sm);
+    .button-size(@btn-height-sm; @btn-py-sm; @btn-px-sm; @btn-rounded; @btn-text-sm);
   }
-}
-
-.btn-default() {
-  .button-part(@btn-default-text; @btn-default-bg; @btn-default-border);
 }
 
 .btn-primary() {
   .button-primary(@btn-primary-text; @btn-primary-bg; @primary-color-hover; @primary-color-active);
+}
+
+.btn-default() {
+  .button-part(@btn-default-text; @btn-default-bg; @btn-default-border);
 }
 
 .btn-danger() {
@@ -46,6 +46,32 @@
 
 .btn-ghost() {
   .button-part(@btn-ghost-text; @btn-ghost-bg; @btn-ghost-border);
+}
+
+.btn-dashed() {
+  .button-part(@btn-default-text; @btn-default-bg; @btn-default-border);
+  border-style: dashed;
+}
+
+.btn-link() {
+  .button-part(@primary-color; transparent; transparent);
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    color: @primary-color-hover;
+    border-color: transparent;
+    background: transparent;
+  }
+
+  &:active {
+    color: @primary-color-active;
+    border-color: transparent;
+    background: transparent;
+  }
+}
+
+.btn-text() {
 }
 
 .button-disabled(@color: @btn-disabled-text; @bg: @btn-disabled-bg; @border: @btn-disabled-border) {
@@ -99,5 +125,10 @@
     .button-color(@primary-color-active, @bg, @primary-color-active);
   }
 
+  .button-disabled();
+}
+
+.button-ghost() {
+  text-shadow: none;
   .button-disabled();
 }
