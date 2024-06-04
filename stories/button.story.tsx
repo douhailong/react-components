@@ -5,12 +5,31 @@ import Button from '@components/button';
 export const Status = () => {
   return (
     <div>
-      <Button>
-        <span>Default Button</span>
-      </Button>
-      <Button>Danger Button</Button>
-      <Button>Disabled Button</Button>
-      <Button>Default Button</Button>
+      <div style={{ margin: '8px 0' }}>type</div>
+      <div style={{ display: 'flex', gap: 6 }}>
+        <Button type='primary'>Primary Button</Button>
+        <Button>Default Button</Button>
+        <Button type='text'>Text Button</Button>
+        <Button type='link'>Link Button</Button>
+      </div>
+
+      <div style={{ margin: '8px 0' }}>size</div>
+      <div style={{ display: 'flex', gap: 6 }}>
+        <Button type='primary' size='lg'>
+          Large Button
+        </Button>
+        <Button>Middle Button</Button>
+        <Button size='sm'>Small Button</Button>
+      </div>
+
+      <div style={{ margin: '8px 0' }}>danger</div>
+      <div style={{ display: 'flex', gap: 6 }}>
+        <Button type='primary' size='lg'>
+          Large Button
+        </Button>
+        <Button>Middle Button</Button>
+        <Button size='sm'>Small Button</Button>
+      </div>
     </div>
   );
 };

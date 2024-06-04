@@ -1,13 +1,11 @@
 @import './default.less';
-// @import '../../_style/defined.less';
-// @import '../../_style/colors.less';
 
 .btn() {
   position: relative;
   display: inline-block;
   font-weight: @btn-font-weight;
   white-space: nowrap;
-  outline: none;
+  outline: 0;
   box-shadow: @btn-shadow;
   border: @btn-border-width @btn-border-style transparent;
   text-align: center;
@@ -15,19 +13,91 @@
   user-select: none;
   touch-action: manipulation;
   box-sizing: border-box;
+  transition: all 0.3s;
   .button-size(@btn-height-md; @btn-py-md; @btn-px-md; @rounded-md; @btn-text-md);
+
+  &[disabled] {
+    cursor: not-allowed;
+    > * {
+      pointer-events: none;
+    }
+  }
+
+  &-lg {
+    .button-size(@btn-height-lg; @btn-py-lg; @btn-px-lg; @rounded-lg; @btn-text-lg);
+  }
+
+  &-sm {
+    .button-size(@btn-height-sm; @btn-py-sm; @btn-px-sm; @rounded-sm; @btn-text-sm);
+  }
 }
 
 .btn-default() {
-  background: @btn-default-bg;
+  .button-part(@btn-default-text; @btn-default-bg; @btn-default-border);
 }
 
-// .btn-primary() {
-// }
+.btn-primary() {
+  .button-primary(@btn-primary-text; @btn-primary-bg; @primary-color-hover; @primary-color-active);
+}
+
+.btn-danger() {
+  .button-primary(@btn-danger-text; @btn-danger-bg; @error-color-hover; @error-color-active);
+}
+
+.btn-ghost() {
+  .button-part(@btn-ghost-text; @btn-ghost-bg; @btn-ghost-border);
+}
+
+.button-disabled(@color: @btn-disabled-text; @bg: @btn-disabled-bg; @border: @btn-disabled-border) {
+  &[disabled] {
+    .button-color(@color; @bg; @border);
+    text-shadow: none;
+    box-shadow: none;
+  }
+}
 
 .button-size(@h; @p-y; @p-x; @rounded; @text) {
   height: @h;
   padding: @p-y @p-x;
   font-size: @text;
   border-radius: @rounded;
+}
+
+.button-color(@color; @bg; @border) {
+  color: @color;
+  border-color: @border;
+  background-color: @bg;
+}
+
+.button-primary(@color; @bg; @hover; @active) {
+  .button-color(@color, @bg, @bg);
+
+  text-shadow: @btn-text-shadow;
+  box-shadow: @btn-primary-shadow;
+
+  &:hover,
+  &:focus {
+    .button-color(@color, @hover, @hover);
+  }
+
+  &:active {
+    .button-color(@color, @active, @active);
+  }
+
+  .button-disabled();
+}
+
+.button-part(@color; @bg; @border) {
+  .button-color(@color, @bg, @border);
+
+  &:hover,
+  &:focus {
+    .button-color(@primary-color-hover, @bg, @primary-color-hover);
+  }
+
+  &:active {
+    .button-color(@primary-color-active, @bg, @primary-color-active);
+  }
+
+  .button-disabled();
 }

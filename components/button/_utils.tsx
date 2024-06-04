@@ -20,7 +20,9 @@ const sliceTwoCn = (child: ReactNode, needInsert: boolean) => {
   }
 
   if (isValidElement(child) && isTowCN(child.props.children)) {
-    return cloneElement(child, {}, child.props.children.split('').join(space));
+    return cloneElement(child, {
+      children: child.props.children.split('').join(space)
+    });
   }
 
   return child;

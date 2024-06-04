@@ -1,10 +1,5 @@
 import React, { forwardRef } from 'react';
-import type {
-  ForwardRefRenderFunction,
-  MouseEvent,
-  ReactNode,
-  Ref
-} from 'react';
+import type { ForwardRefRenderFunction, MouseEvent, ReactNode, Ref } from 'react';
 import clsx from 'clsx';
 import type { ButtonProps } from './types';
 import { isFragment } from '../_utils/react-dom';
@@ -13,12 +8,9 @@ import './style/index.less';
 
 type ButtonRef = HTMLAnchorElement | HTMLButtonElement;
 
-const InternalButton: ForwardRefRenderFunction<ButtonRef, ButtonProps> = (
-  props,
-  ref
-) => {
+const InternalButton: ForwardRefRenderFunction<ButtonRef, ButtonProps> = (props, ref) => {
   const {
-    type,
+    type = 'default',
     shape,
     size,
     iconPosition = 'start',
@@ -52,17 +44,14 @@ const InternalButton: ForwardRefRenderFunction<ButtonRef, ButtonProps> = (
     className
   );
 
-  const handleClick = (
-    e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>
-  ) => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     if (loading) {
       return e.preventDefault();
     }
     onClick && onClick(e);
   };
 
-  const kids =
-    children || children === 0 ? sliceChildren(children, true) : null;
+  const kids = children || children === 0 ? sliceChildren(children, true) : null;
 
   const buttonInside = (iconNode: ReactNode, kidsNode: ReactNode) => {
     return iconPosition === 'start' ? (

@@ -60,11 +60,11 @@ export type FormProps<
   /**
    * @zh 表单值改变的回调 第一个参数是被改变表单项的值 第二个参数是所有表单项值 用户操作表单不会执行
    */
-  onValuesChange?: (values: FormData) => void;
+  onValuesChange?: (value: Partial<FormData>, values: Partial<FormData>) => void;
   /**
    * @zh 表单值改变的回调 只有用户操作表单才会执行
    */
-  onChange?: (values: FormData) => void;
+  onChange?: (value: Partial<FormData>, values: Partial<FormData>) => void;
   /**
    * @zh 表达验证成功的回调
    */
@@ -79,7 +79,9 @@ export type FormContextProps<
   FormData = any,
   FieldValue = FormData[keyof FormData],
   FieldKey extends keyof any = keyof FormData
-> = Pick<FormProps<FormData, FieldValue, FieldKey>, ''>;
+> = Pick<FormProps<FormData, FieldValue, FieldKey>, ''> & {
+  store: FormInstance<FormData, FieldValue, FieldKey>;
+};
 
 export enum SubmitStatus {
   init = 'init',
@@ -87,3 +89,10 @@ export enum SubmitStatus {
   success = 'success',
   submitting = 'submitting'
 }
+
+export type FieldError<FieldValue = any> = {
+  value?: FieldValue;
+  message?: ReactNode;
+  type?: string;
+  requiredError?: boolean;
+};
