@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import type { ForwardRefRenderFunction, MouseEvent, ReactNode, Ref } from 'react';
 import clsx from 'clsx';
 import type { ButtonProps } from './types';
-import { isFragment } from '../_utils/react-dom';
+// import { isFragment } from '../_utils/react-dom';
 import { sliceChildren } from './_utils';
 import './style/index.less';
 

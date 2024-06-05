@@ -13,7 +13,7 @@
   user-select: none;
   touch-action: manipulation;
   box-sizing: border-box;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   .button-size(@btn-height-md; @btn-py-md; @btn-px-md; @btn-rounded; @btn-text-md);
 
   &[disabled] {
@@ -41,11 +41,81 @@
 }
 
 .btn-danger() {
-  .button-primary(@btn-danger-text; @btn-danger-bg; @error-color-hover; @error-color-active);
+  .button-color(@btn-danger-text, @btn-danger-bg, @btn-danger-border);
+
+  &:hover,
+  &:focus {
+    .button-color(@error-color-hover, @btn-danger-bg, @error-color-hover);
+  }
+
+  &:active {
+    .button-color(@error-color-active, @btn-danger-bg, @error-color-active);
+  }
+  .button-disabled();
+}
+
+.btn-danger-primary() {
+  .button-primary(@btn-primary-text; @error-color; @error-color-hover; @error-color-active);
+}
+
+.btn-danger-link() {
+  .button-color(@error-color; btn-text-bg-hover; transparent);
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    .button-color(@error-color-hover, transparent, transparent);
+  }
+
+  &:active {
+    .button-color(@error-color-active, transparent, transparent);
+  }
+  .button-disabled(@btn-disabled-text; transparent; transparent);
+}
+
+.btn-danger-text() {
+  .button-color(@error-color; btn-text-bg-hover; transparent);
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    .button-color(@error-color-hover, @red-50, transparent);
+  }
+
+  &:active {
+    .button-color(@error-color-active, @red-100, transparent);
+  }
+  .button-disabled(@btn-disabled-text; transparent; transparent);
 }
 
 .btn-ghost() {
   .button-part(@btn-ghost-text; @btn-ghost-bg; @btn-ghost-border);
+}
+
+.btn-ghost-part(@color; @border; @hover; @active) {
+  .button-color(@color, transparent, @border);
+  text-shadow: none;
+
+  &:hover,
+  &:focus {
+    & when (@border = transparent) {
+      .button-color(@hover; transparent; transparent);
+    }
+
+    & when not (@border = transparent) {
+      .button-color(@hover; transparent; @hover);
+    }
+  }
+
+  &:active {
+    & when (@border = transparent) {
+      .button-color(@active; transparent; transparent);
+    }
+
+    & when not (@border = transparent) {
+      .button-color(@active; transparent; @active);
+    }
+  }
 }
 
 .btn-dashed() {
@@ -54,24 +124,33 @@
 }
 
 .btn-link() {
-  .button-part(@primary-color; transparent; transparent);
+  .button-part(@btn-link-text; @btn-link-bg; @btn-link-border);
   box-shadow: none;
 
   &:hover,
   &:focus {
-    color: @primary-color-hover;
-    border-color: transparent;
-    background: transparent;
+    .button-color(@primary-color-hover; transparent; transparent);
   }
 
   &:active {
-    color: @primary-color-active;
-    border-color: transparent;
-    background: transparent;
+    .button-color(@primary-color-active; transparent; transparent);
   }
+  .button-disabled(@btn-disabled-text; transparent; transparent);
 }
 
 .btn-text() {
+  .button-part(@btn-text-text; @btn-text-bg; @btn-text-border);
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    .button-color(@btn-text-text; @btn-text-bg-hover; transparent);
+  }
+
+  &:active {
+    .button-color(@btn-text-text; @btn-text-bg-active; transparent);
+  }
+  .button-disabled(@btn-disabled-text; transparent; transparent);
 }
 
 .button-disabled(@color: @btn-disabled-text; @bg: @btn-disabled-bg; @border: @btn-disabled-border) {

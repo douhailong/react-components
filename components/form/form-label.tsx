@@ -1,9 +1,9 @@
-import React from 'react';
+// import React from 'react';
 
-type FormLabelProps = {};
+// type FormLabelProps = {};
 
-const FormLabel: React.FC<FormLabelProps> = ({}) => {
-  return <div>FormLabel</div>;
-};
+// const FormLabel: React.FC<FormLabelProps> = ({}) => {
+//   return <div>FormLabel</div>;
+// };
 
-export default FormLabel;
+// export default FormLabel;

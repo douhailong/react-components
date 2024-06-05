@@ -19,6 +19,14 @@
     .btn-ghost();
   }
 
+  &-ghost&-primary {
+    .btn-ghost-part(@btn-primary-border; @btn-primary-border; @primary-color-hover; @primary-color-active);
+  }
+
+  &-ghost&-danger {
+    .btn-ghost-part(@btn-danger-border; @btn-danger-border; @error-color-hover; @error-color-active);
+  }
+
   &-dashed {
     .btn-dashed();
   }
@@ -27,11 +35,27 @@
     .btn-danger();
   }
 
+  &-danger&-primary {
+    .btn-danger-primary();
+  }
+
+  &-danger&-link {
+    .btn-danger-link();
+  }
+
+  &-danger&-text {
+    .btn-danger-text();
+  }
+
   &-link {
     .btn-link();
   }
 
   &-text {
     .btn-text();
+  }
+
+  &-block {
+    width: 100%;
   }
 }

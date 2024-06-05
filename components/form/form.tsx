@@ -1,9 +1,9 @@
-import React from 'react';
+// import React from 'react';
 
-type FormProps = {};
+// type FormProps = {};
 
-const Form: React.FC<FormProps> = ({}) => {
-  return <div>Form</div>;
-};
+// const Form: React.FC<FormProps> = ({}) => {
+//   return <div>Form</div>;
+// };
 
-export default Form;
+// export default Form;
