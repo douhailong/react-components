@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import type { ButtonProps } from './types';
 // import { isFragment } from '../_utils/react-dom';
 import { sliceChildren } from './_utils';
+import LoadingIcon from './loading-icon';
 import './style/index.less';
 
 type ButtonRef = HTMLAnchorElement | HTMLButtonElement;

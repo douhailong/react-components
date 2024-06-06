@@ -1,4 +1,4 @@
-import { type ReactNode, isValidElement, cloneElement, Children } from 'react';
+import { type ReactNode, type ReactElement, isValidElement, cloneElement, Children } from 'react';
 import { isString, isNumber } from '../_utils/is';
 import { isFragment } from '../_utils/react-dom';
 
@@ -6,21 +6,23 @@ import { isFragment } from '../_utils/react-dom';
 const twoCnReg = /^[\u4e00-\u9fa5]{2}$/;
 export const isTowCN = twoCnReg.test.bind(twoCnReg);
 
-const sliceTwoCn = (child: ReactNode, needInsert: boolean) => {
+const sliceTwoCn = (child: ReactElement, needInsert: boolean) => {
   if (child === null || child === undefined) return;
 
   const space = needInsert ? ' ' : '';
+  // 直接调用isValidElement会导致child类型不匹配
+  const validElement = () => isValidElement(child);
 
   if (isString(child)) {
     return <span>{isTowCN(child) ? child.split('').join(space) : child}</span>;
   }
 
-  if (isFragment(child)) {
-    return <span>{child}</span>;
+  if (validElement() && isTowCN(child.props.children)) {
+    return cloneElement(child, { children: child.props.children.split('').join(space) });
   }
 
-  if (isValidElement(child) && isTowCN(child.props.children)) {
-    return cloneElement(child, {}, child.props.children.split('').join(space));
+  if (isFragment(child)) {
+    return <span>{child}</span>;
   }
 
   return child;

@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 es
+lib
+umd
 dist-ssr
 *.local
 

@@ -5,29 +5,14 @@ export const Demo = () => {
   return (
     <div>
       <div style={{ margin: '8px 0' }}>type</div>
-      <div style={{ display: 'flex', gap: 6 }}>
-        <Button type='primary'>Primary Button</Button>
-        <Button>Default Button</Button>
-        <Button type='dashed'>Text Button</Button>
-        <Button type='link'>Link Button</Button>
-        <Button type='text'>Text Button</Button>
-      </div>
-
-      <div style={{ margin: '8px 0' }}>danger</div>
-      <div style={{ display: 'flex', gap: 6 }}>
-        <Button danger type='primary'>
+      <div style={{ display: 'flex', gap: 6, background: 'rgb(190, 200, 200)', padding: 12 }}>
+        <Button type='primary' iconPosition='end' icon={<span>111</span>}>
           Primary Button
         </Button>
-        <Button danger>Default Button</Button>
-        <Button danger type='dashed'>
-          Text Button
-        </Button>
-        <Button danger type='link'>
-          Link Button
-        </Button>
-        <Button danger type='text'>
-          Text Button
-        </Button>
+        <Button>Default Button</Button>
+        <Button type='dashed'>Dashed Button</Button>
+        <Button type='link'>Link Button</Button>
+        <Button type='text'>Text Button</Button>
       </div>
 
       <div style={{ margin: '8px 0' }}>ghost</div>
@@ -37,12 +22,29 @@ export const Demo = () => {
         </Button>
         <Button ghost>Default Button</Button>
         <Button ghost type='dashed'>
-          Text Button
+          Dashed Button
         </Button>
         <Button ghost type='link'>
           Link Button
         </Button>
-        <Button ghost type='text'>
+        <Button ghost type='text' danger>
+          Text Button
+        </Button>
+      </div>
+
+      <div style={{ margin: '8px 0' }}>danger</div>
+      <div style={{ display: 'flex', gap: 6 }}>
+        <Button danger type='primary'>
+          Primary Button
+        </Button>
+        <Button danger>Default Button</Button>
+        <Button danger type='dashed'>
+          Dashed Button
+        </Button>
+        <Button danger type='link'>
+          Link Button
+        </Button>
+        <Button danger type='text'>
           Text Button
         </Button>
       </div>

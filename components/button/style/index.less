@@ -23,8 +23,16 @@
     .btn-ghost-part(@btn-primary-border; @btn-primary-border; @primary-color-hover; @primary-color-active);
   }
 
+  &-ghost&-dashed {
+    .btn-ghost-part(@btn-ghost-text; @btn-ghost-border; @primary-color-hover; @primary-color-active);
+  }
+
   &-ghost&-danger {
     .btn-ghost-part(@btn-danger-border; @btn-danger-border; @error-color-hover; @error-color-active);
+  }
+
+  &-ghost&-text {
+    .btn-ghost-part(@btn-default-text; transparent; @gray-600; @gray-900);
   }
 
   &-dashed {

@@ -19,7 +19,7 @@
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./",
+    // "baseUrl": "./",
     "paths": {
       "@components/*": ["./components/*"]
     },
@@ -38,7 +38,7 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["./"],
+  "include": ["./components", "./stories"],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
