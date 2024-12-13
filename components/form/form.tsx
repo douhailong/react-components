@@ -2,7 +2,7 @@
 
 // type FormProps = {};
 
-// const Form: React.FC<FormProps> = ({}) => {
+// const Form = ({}) => {
 //   return <div>Form</div>;
 // };
 

@@ -1,11 +1,9 @@
 const strProto = Object.prototype.toString;
 
-export const isString = (tar: unknown): tar is string =>
-  typeof tar === 'string';
-export const isNumber = (tar: unknown) => typeof tar === 'number';
-export const isBoolean = (tar: unknown) => typeof tar === 'boolean';
-export const isFunction = (tar: unknown) => typeof tar === 'function';
-export const isArray = (tar: unknown) => Array.isArray(tar);
-export const isObject = (tar: unknown) =>
-  strProto.call(tar) === '[object Object]';
-export const isExist = (tar: any): boolean => tar || tar === 0;
+export const isString = (arg: unknown): arg is string => typeof arg === 'string';
+export const isNumber = (arg: unknown) => typeof arg === 'number';
+export const isBoolean = (arg: unknown) => typeof arg === 'boolean';
+export const isFunction = (arg: unknown) => typeof arg === 'function';
+export const isArray = (arg: unknown) => Array.isArray(arg);
+export const isObject = (arg: unknown) => strProto.call(arg) === '[object Object]';
+export const isExist = (arg: any): boolean => arg || arg === 0;
