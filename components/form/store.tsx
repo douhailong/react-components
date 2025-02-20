@@ -1,14 +1,14 @@
-import { type ReactNode } from 'react';
-import { get, has, omit } from 'lodash-es';
-import Control from './control';
-import { isArray, isFunction, isObject, isExist } from '../_utils/is';
-import { cloneDeep, set } from './_utils';
-import promisify from './promisify';
-import { FormProps, FieldError, SubmitStatus } from './types';
+import { type ReactNode } from "react";
+import { get, has, omit } from "lodash-es";
+import Control from "./control";
+import { isArray, isFunction, isObject, isExist } from "../_utils/is";
+import { cloneDeep, set } from "./_utils";
+import promisify from "./promisify";
+import { FormProps, FieldError, SubmitStatus } from "./types";
 
-export type NotifyType = 'setFieldValue' | 'reset' | 'innerSetValue';
+export type NotifyType = "setFieldValue" | "reset" | "innerSetValue";
 
-export type InnerCallbackType = 'onValuesChange' | 'onSubmit' | 'onChange' | 'onSubmitFailed';
+export type InnerCallbackType = "onValuesChange" | "onSubmit" | "onChange" | "onSubmitFailed";
 
 export type StoreChangeInfo<T> = {
   prev: any;
@@ -31,44 +31,54 @@ export type DeepPartial<T> = T extends object
     }
   : T;
 
+/**
+ *
+ */
 class Store<
   FormData = any,
   FieldValue = FormData[keyof FormData],
-  FieldKey extends keyof any = keyof FormData
+  FieldKey extends keyof any = keyof FormData,
 > {
-  // 整个表单的提交状态 只有触发表单原生reset事件才会重置回init TODO from.reset还未实现
+  // 整个表单的提交状态 只有表单原生reset事件才会重置回init TODO from.reset还未实现
   private submitStatus: SubmitStatus = SubmitStatus.init;
 
+  // 注册的FormItem 即Control
   private registerFields: Control<FormData, FieldValue, FieldKey>[] = [];
 
   // 所有FormItem值变化
   private registerWatchers: (() => void)[] = [];
 
-  // 所有FormItem内部状态变化 errors validating touched 状态变化
+  // 所有FormItem内部状态变化 errors validating touched
   private registerStateWatchers: (() => void)[] = [];
 
   // Form整体变动
   private registerFormWatchers: (() => void)[] = [];
 
-  // 字段改动就会存储 只有reset才会重置
+  // 字段改动就会存储 reset才会重置
   private touchedFields: Record<string, unknown> = {};
 
+  // 存储form当前值
   private store: Partial<FormData> = {};
 
+  // 初始值
   private initialValues: Partial<FormData> = {};
 
+  // 内部回调 TODO 注释描述
   private callbacks: Pick<FormProps<FormData, FieldValue, FieldKey>, InnerCallbackType> & {
     onValidateFailed?: (errors: { [key in FieldKey]: FieldError<FieldValue> }) => void;
   } = {};
 
+  // FormItem值改变的通知
   private notifyWatchers() {
     this.registerWatchers.forEach((watcher) => watcher());
   }
 
+  // FormItem状态改变的通知
   private notifyStateWatchers() {
     this.registerStateWatchers.forEach((watcher) => watcher());
   }
 
+  // 全局改变的通知
   private notifyFormWatchers() {
     this.registerFormWatchers.forEach((watcher) => watcher());
   }
@@ -90,8 +100,9 @@ class Store<
     }
   }
 
+  // 通知FormItem更新值，让包裹的组件UI更新 store值改变 -> notify通知更新UI
   private notify(type: NotifyType, info: StoreChangeInfo<FieldKey>) {
-    if (type === 'setFieldValue' || (type === 'innerSetValue' && !info.ignore)) {
+    if (type === "setFieldValue" || (type === "innerSetValue" && !info.ignore)) {
       1;
     }
     this.registerFields.forEach((field) => {
@@ -99,7 +110,13 @@ class Store<
     });
   }
 
-  private getRegisteredFields() {
+  private getRegisteredFields(hasField: boolean, options: { containFormList?: boolean }) {
+    if (hasField) {
+      return this.registerFields.filter(
+        (control) =>
+          control.hasFieldProps() && (control.props?.isFormList || options?.containFormList),
+      );
+    }
     return this.registerFields;
   }
 
@@ -107,7 +124,7 @@ class Store<
     return this.registerFields.find((control) => control.props.field === field);
   }
 
-  // 通知form状态更新 进行依赖收集
+  // 通知form状态更新 进行状态收集
   innerCollectFormState() {
     this.notifyStateWatchers();
   }
@@ -115,7 +132,7 @@ class Store<
   innerSetCallbacks(
     callbacks: Pick<FormProps<FormData, FieldValue, FieldKey>, InnerCallbackType> & {
       onValidateFailed?: (errors: { [key in FieldKey]: FieldError<FieldValue> }) => void;
-    }
+    },
   ) {
     this.callbacks = callbacks;
   }
@@ -145,12 +162,12 @@ class Store<
   }
 
   // 收集所有control字段，并在组件卸载时移除
-  registerField(field: Control<FormData, FieldValue, FieldKey>) {
-    this.registerFields.push(field);
+  registerField(control: Control<FormData, FieldValue, FieldKey>) {
+    this.registerFields.push(control);
     this.notifyWatchers();
 
     return () => {
-      this.registerFields = this.registerFields.filter((x) => x !== field);
+      this.registerFields = this.registerFields.filter((x) => x !== control);
       this.notifyWatchers();
     };
   }
@@ -166,8 +183,15 @@ class Store<
 
   innerSetInitialValue(field: FieldKey, value: FieldValue) {
     if (!field) return;
-    // TODO
+
+    this.initialValues[field as keyof any] = value;
+
+    if (!inTouchedFields(field)) {
+      set(this.store, field, value);
+    }
   }
+
+  private pushTouchedFields() {}
 
   // 会同时触发 onChange onValuesChange
   innerSetFieldValue(field: FieldKey, value: FieldValue) {
@@ -191,7 +215,7 @@ class Store<
 
   innerGetStoreStatus() {
     return {
-      submitStatus: this.submitStatus
+      submitStatus: this.submitStatus,
     };
   }
 
@@ -202,6 +226,7 @@ class Store<
       .filter((x) => x.isTouched())
       .map((x) => x.props.field);
   }
+  a;
 
   // get 表单
 
@@ -250,9 +275,9 @@ class Store<
       if (current) {
         const info = {};
 
-        if ('error' in current) info.errors = current.error;
-        if ('warning' in current) info.warnings = current.warning;
-        if ('touched' in current) info.touched = current.touched;
+        if ("error" in current) info.errors = current.error;
+        if ("warning" in current) info.warnings = current.warning;
+        if ("touched" in current) info.touched = current.touched;
         // if ('value' in current) info.errors = current.error;
       }
     });
@@ -265,8 +290,29 @@ class Store<
   submit() {
     this.toggleSubmitStatus(SubmitStatus.submitting);
 
-    this.validate(() => {
+    this.validate((errors, values) => {
       const { onSubmit, onSubmitFailed } = this.callbacks;
+      let result = null;
+
+      if (!errors && onSubmit) {
+        result = onSubmit(values);
+      }
+
+      if (errors && onSubmitFailed) {
+        result = onSubmitFailed(errors);
+      }
+
+      if (result && result.then) {
+        return result
+          .then((value) => {
+            return Promise.resolve(value);
+          })
+          .catch((error) => {
+            return Promise.reject(error);
+          });
+      }
+
+      this.toggleSubmitStatus(errors ? SubmitStatus.error : SubmitStatus.success);
     });
   }
 

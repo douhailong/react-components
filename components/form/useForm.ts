@@ -45,7 +45,9 @@ const getFormInstance = <
     getInnerMethods: (isInner?: boolean) => {
       const methods = {} as InnerMethods<FormData, FieldValue, FieldKey>;
 
-      isInner && innerMethodsKey.forEach((key) => (methods[key] = store[key]));
+      if (isInner) {
+        innerMethodsKey.forEach((key) => (methods[key] = store[key]));
+      }
 
       return methods;
     }
